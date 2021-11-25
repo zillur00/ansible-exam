@@ -1,0 +1,22 @@
+---
+- name: Install Common Packages
+  hosts: dev,prod,webservers
+  tasks:
+      - name: Install httpd,mod_ssl,mariadb
+        yum:
+         name:
+            - httpd
+            - mod_ssl
+            - mariadb
+         state: present
+      - name: Install development tools package on dev host
+        yum:
+         name: '@Development tools'
+         state: latest
+        when: "'dev' in group_names"
+      - name: Update all the packages on dev hosts
+        yum:
+         name: '*'
+         state: latest
+        when: "'dev' in group_names"      
+...

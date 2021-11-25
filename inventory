@@ -1,0 +1,11 @@
+[dev]
+node1.example.com
+[test]
+node2.example.com
+[proxy]
+node3.example.com
+[prod]
+node4.example.com
+node5.example.com
+[webservers:children]
+prod
