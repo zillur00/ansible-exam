@@ -1,0 +1,6 @@
+---
+- name: Install apachec from apache-role 
+  hosts: webservers
+  roles: 
+   - name: sample-apache
+...    

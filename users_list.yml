@@ -1,0 +1,9 @@
+users:
+ - username: bill
+   job: developer
+ - username: chris
+   job: manager
+ - username: dave
+   job: test
+ - username: ethan
+   job: developer  

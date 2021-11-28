@@ -1,0 +1,15 @@
+---
+- name: group create
+  hosts: dev,proxy
+  tasks:
+   - name: devops group create
+     group:
+      name: devops
+      state: present
+     when: "'dev' in group_names"
+   - name: managers group create
+     group:
+      name: managers
+      state: present
+     when: "'proxy' in group_names"
+...
