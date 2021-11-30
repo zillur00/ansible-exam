@@ -1,0 +1,44 @@
+---
+- name: copy file with custom information
+  hosts: all
+  tasks:
+   #- name: get file
+    # get_url: 
+     # url: https://classroom.example.com/report.txt
+      #dest: /home/sandy/ansible/report.txt
+   - name: copy report.txt
+     copy:
+      src: /home/sandy/ansible/report.txt
+      dest: /root/report.txt
+   - name: chahge hostname
+     lineinfile:
+      path: /root/report.txt
+      line: HOST={{ ansible_hostname }}
+      regex: ^HOST 
+      state: present 
+   - name: chahge memory
+     lineinfile:
+      path: /root/report.txt
+      line: MEMORY={{ ansible_memtotal_mb }}
+      regex: ^MEMORY
+      state: present 
+   - name: chahge bios version
+     lineinfile:
+      path: /root/report.txt  
+      line: BIOS={{ ansible_bios_version }}
+      regex: ^BIOS
+      state: present 
+   - name: chahge vda
+     lineinfile:
+      path: /root/report.txt
+      line: VDA_DISK_SIZE={% if ansible_devices.vda is defined %}{{ ansible_devices.vda.size }} {% else %} NONE {% endif %}
+      regex: ^VDA_DISK_SIZE
+      state: present 
+   - name: chahge vdb
+     lineinfile:
+      path: /root/report.txt
+      line: VDB_DISK_SIZE={% if ansible_devices.sda is defined %}{{ ansible_devices.sda.size }} {% else %} NONE {% endif %}
+      regex: ^VDB_DISK_SIZE
+      state: present 
+        
+...
