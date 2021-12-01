@@ -1,0 +1,9 @@
+---
+- name: install lvm
+  hosts: all
+  tasks:
+   - name: install lvm2
+     yum:
+      name: lvm2
+      state: present 
+...

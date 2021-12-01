@@ -1,0 +1,37 @@
+---
+- name: create volume
+  hosts: all
+  tasks:
+   - name: create partition
+     parted: 
+      device: /dev/sdb
+      number: 1
+      flags: [lvm]
+      state: present
+   - name: create vg
+     lvg:
+      vg: vg0
+      pvs: /dev/sdb1
+     when: ansible_devices.sdb.partitions.sdb1 is defined
+   - name: create lv
+     lvol:
+      vg: vg0
+      lv: lv0
+      size: 12000m
+     when: ansible_lvm.vgs.vg0 is defined and ((ansible_lvm.vgs.vg0.size_g | float) > 12)
+   - name: send message if volume group is not large enough
+     debug: 
+      msg: Not enough space for logical volume
+     when:  ansible_lvm.vgs.vg0 is defined and ((ansible_lvm.vgs.vg0.size_g | float) < 12)
+   - name: create similiar volume
+     lvol:
+      vg: vg0
+      lv: lv0
+      size: 6000m
+     when: ansible_lvm.vgs.vg0 is defined and ((ansible_lvm.vgs.vg0.size_g | float) < 12)  
+   - name: create fs
+     filesystem: 
+      dev: /dev/vg0/lv0
+      fstype: xfs
+     when: ansible_lvm.vgs.vg0 is defined   
+...
