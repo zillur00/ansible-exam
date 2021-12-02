@@ -1,0 +1,10 @@
+---
+- name: use rhel system role to timesync
+  hosts: all
+  roles:
+   - rhel-system-roles.timesync 
+  vars:
+   timesync_ntp_servers:
+    - hostname: 0.uk.pool.ntp.org
+      iburst: yes 
+...

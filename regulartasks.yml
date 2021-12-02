@@ -1,0 +1,11 @@
+---
+- name: cron
+  hosts: all
+  tasks:
+   - name: ensure a jon that runs at noon
+     cron:
+      name: "datejob"
+      minute: "0"
+      hour: "12"
+      job: "date >> /root/datefile"
+...
