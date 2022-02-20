@@ -2,13 +2,9 @@
 - name: copy file with custom information
   hosts: all
   tasks:
-   #- name: get file
-    # get_url: 
-     # url: https://classroom.example.com/report.txt
-      #dest: /home/sandy/ansible/report.txt
-   - name: copy report.txt
-     copy:
-      src: /home/sandy/ansible/report.txt
+   - name: get file
+     get_url: 
+      url: https://classroom.example.com/report.txt
       dest: /root/report.txt
    - name: chahge hostname
      lineinfile:
